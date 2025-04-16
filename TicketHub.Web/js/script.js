@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Constants
     const TICKET_PRICE = 89.99;
-    const API_URL = 'https://eventticketapi-jay.azurewebsites.net/TicketOrder'; // Change this to your deployed API URL
+    const API_URL = 'https://eventticketapi-jay.azurewebsites.net/TicketOrder'; 
     
     // Update total amount when quantity changes
     quantitySelect.addEventListener('change', function() {
