@@ -4,10 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicketHub - Purchase Tickets</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .concert-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .concert-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .concert-details {
+            padding: 20px;
+        }
+        
+        .concert-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .artist {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+        
+        .details {
+            margin-bottom: 5px;
+            color: #7f8c8d;
+        }
+        
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .purchase-form {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .total-label {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .total-amount {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+        
+        .btn-purchase {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-purchase:hover {
+            background-color: #2980b9;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        
+        .modal-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .modal p {
+            margin-bottom: 10px;
+        }
+        
+        .order-details {
+            font-weight: bold;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+        
+        .btn-close {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .concert-card {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -15,79 +262,191 @@
             <h1>TicketHub</h1>
             <p class="subtitle">Your gateway to amazing concerts</p>
         </header>
-
-        <main>
+        
+        <div class="concert-card">
+            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80" alt="Concert" class="concert-image">
             <div class="concert-details">
-                <div class="concert-image">
-                    <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Concert">
-                </div>
-                </div>
-                <div class="concert-info">
-                    <h2 id="concertName">Sweetener World Tour</h2>
-                    <p class="artist">Ariana Grande</p>
-                    <p class="date">April 20, 2025 | 8:00 PM</p>
-                    <p class="venue">Rogers Arena, Vancouver, BC</p>
-                    <p class="price">$89.99 per ticket</p>
-                </div>
-            </div>
-
-            <div class="purchase-form">
-                <h3>Complete Your Purchase</h3>
-                <form id="ticketForm">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="quantity">Number of Tickets</label>
-                        <select id="quantity" name="quantity" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select>
-                    </div>
-                    <div class="form-group total-group">
-                        <p class="total-label">Total:</p>
-                        <p class="total-amount" id="totalAmount">$89.99</p>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn-purchase">Complete Purchase</button>
-                    </div>
-                </form>
-            </div>
-        </main>
-
-        <div id="confirmation" class="confirmation hidden">
-            <div class="confirmation-content">
-                <span class="close-btn">&times;</span>
-                <h2>Purchase Confirmed!</h2>
-                <p>Thank you for your purchase. A confirmation email has been sent to your email address.</p>
-                <p class="order-details">Order Details:</p>
-                <p id="conf-name"></p>
-                <p id="conf-email"></p>
-                <p id="conf-concert">Concert: Sweetener World Tour</p>
-                <p id="conf-tickets"></p>
-                <p id="conf-date"></p>
-                <button class="btn-close">Close</button>
+                <h2 class="concert-title">Sweetener World Tour</h2>
+                <p class="artist">Ariana Grande</p>
+                <p class="details">April 20, 2025 | 8:00 PM</p>
+                <p class="details">Rogers Arena, Vancouver, BC</p>
+                <p class="price">$89.99 per ticket</p>
             </div>
         </div>
-
+        
+        <div class="purchase-form">
+            <h3 class="form-title">Complete Your Purchase</h3>
+            <form id="ticketForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Number of Tickets</label>
+                    <select id="quantity" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="total">
+                    <p class="total-label">Total:</p>
+                    <p class="total-amount" id="totalAmount">$89.99</p>
+                </div>
+                <button type="submit" class="btn-purchase">Complete Purchase</button>
+            </form>
+        </div>
+        
         <footer>
             <p>&copy; 2025 TicketHub. All rights reserved.</p>
         </footer>
     </div>
-
-    <div id="loading" class="loading hidden">
+    
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">Purchase Confirmed!</h2>
+            <p>Thank you for your purchase. A confirmation email has been sent to your email address.</p>
+            <p class="order-details">Order Details:</p>
+            <p id="conf-name"></p>
+            <p id="conf-email"></p>
+            <p id="conf-concert">Concert: Sweetener World Tour</p>
+            <p id="conf-tickets"></p>
+            <p id="conf-date"></p>
+            <button class="btn-close">Close</button>
+        </div>
+    </div>
+    
+    <div id="loadingSpinner" class="loading">
         <div class="spinner"></div>
     </div>
-
-    <script src="js/script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ticketForm = document.getElementById('ticketForm');
+            const quantitySelect = document.getElementById('quantity');
+            const totalAmount = document.getElementById('totalAmount');
+            const modal = document.getElementById('confirmationModal');
+            const closeBtn = document.querySelector('.close');
+            const closeButton = document.querySelector('.btn-close');
+            const loading = document.getElementById('loadingSpinner');
+            
+            // Constants
+            const TICKET_PRICE = 89.99;
+            const API_URL = 'https://eventticketapi-jay.azurewebsites.net/TicketOrder'; 
+            
+            // Update total amount when quantity changes
+            quantitySelect.addEventListener('change', function() {
+                const quantity = parseInt(this.value);
+                totalAmount.textContent = `$${(quantity * TICKET_PRICE).toFixed(2)}`;
+            });
+            
+            // Form submission
+            ticketForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const quantity = parseInt(document.getElementById('quantity').value);
+                
+                // Display loading spinner
+                loading.style.display = 'flex';
+                
+                // Create order object
+                const order = {
+                    name: name,
+                    email: email,
+                    concert: "Sweetener World Tour",
+                    quantity: quantity,
+                    purchaseDate: new Date().toISOString()
+                };
+                
+                console.log("Submitting order:", order);
+                
+                // Send POST request to API
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(order)
+                })
+                .then(response => {
+                    loading.style.display = 'none';
+                    
+                    console.log("Response status:", response.status);
+                    
+                    if (!response.ok) {
+                        // Still show confirmation for testing even if API fails
+                        if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+                            console.log("Local development - showing confirmation despite API error");
+                            showConfirmation(name, email, quantity);
+                            return null;
+                        } else {
+                            throw new Error('Network response was not ok: ' + response.status);
+                        }
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        console.log('Success:', data);
+                    }
+                    
+                    showConfirmation(name, email, quantity);
+                })
+                .catch(error => {
+                    loading.style.display = 'none';
+                    console.error('Error:', error);
+                    
+                    // Still show confirmation for testing purposes
+                    if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+                        console.log("Local development - showing confirmation despite error");
+                        showConfirmation(name, email, quantity);
+                    } else {
+                        alert('There was an error processing your order. Please try again.');
+                    }
+                });
+            });
+            
+            function showConfirmation(name, email, quantity) {
+                // Update confirmation modal
+                document.getElementById('conf-name').textContent = `Name: ${name}`;
+                document.getElementById('conf-email').textContent = `Email: ${email}`;
+                document.getElementById('conf-tickets').textContent = `Tickets: ${quantity}`;
+                document.getElementById('conf-date').textContent = `Purchase Date: ${new Date().toLocaleString()}`;
+                
+                // Show confirmation modal
+                modal.style.display = 'flex';
+                
+                // Reset form
+                ticketForm.reset();
+                totalAmount.textContent = `$${TICKET_PRICE.toFixed(2)}`;
+            }
+            
+            // Close modal
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            closeButton.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Also close when clicking outside the modal
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
