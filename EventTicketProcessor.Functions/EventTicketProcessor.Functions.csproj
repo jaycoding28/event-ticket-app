@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AzureFunctionsVersion>v4</AzureFunctionsVersion>
+		<OutputType>Exe</OutputType>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>53818410-f534-45b9-9132-3c43143a4a49</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Azure Function Core packages -->
+		<PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.20.1" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.4" OutputItemType="Analyzer" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.1.0" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="1.2.0" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Queues" Version="5.2.0" />
+
+		<!-- Azure Storage Clients (if needed) -->
+		<PackageReference Include="Azure.Storage.Queues" Version="12.20.1" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.22.2" />
+		<PackageReference Include="Azure.Storage.Files.Shares" Version="12.20.1" />
+		<PackageReference Include="Azure.Data.Tables" Version="12.9.1" />
+
+		<!-- Logging + Telemetry -->
+		<PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.21.0" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="1.1.0" />
+
+		<!-- SQL (Only keep Microsoft.Data.SqlClient) -->
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+
+		<!-- Configuration -->
+		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.6" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+	</ItemGroup>
+
+	
+
+	<ItemGroup>
+		<None Update="host.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="local.settings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
+	</ItemGroup>
+</Project>

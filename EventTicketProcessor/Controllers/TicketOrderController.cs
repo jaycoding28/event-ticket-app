@@ -1,36 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Azure.Storage.Queues;
-using System.Text.Json;
 using EventTicketProcessor.Models;
-
+using EventTicketProcessor.Services;
+using System.Threading.Tasks;
 
 namespace EventTicketProcessor.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TicketOrderController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly AzureQueueService _queueService;
 
-        public TicketOrderController(IConfiguration config)
+        public TicketOrderController(AzureQueueService queueService)
         {
-            _config = config;
+            _queueService = queueService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitTicket([FromBody] TicketOrder order)
+        public async Task<IActionResult> Post([FromBody] TicketOrder order)
         {
-            var connectionString = _config["AzureStorageQueue"];
-            var queueClient = new QueueClient(connectionString, "event-ticket-queue");
-
-            await queueClient.CreateIfNotExistsAsync();
-
-            string json = JsonSerializer.Serialize(order);
-            string base64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json));
-
-            await queueClient.SendMessageAsync(base64);
-
-            return Ok(new { status = "queued", data = order });
+            await _queueService.SendMessageAsync(order);
+            return Ok(new { message = "Ticket order sent to queue!" });
         }
     }
 }
