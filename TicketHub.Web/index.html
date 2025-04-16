@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketHub - Purchase Tickets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TicketHub</h1>
+            <p class="subtitle">Your gateway to amazing concerts</p>
+        </header>
+
+        <main>
+            <div class="concert-details">
+                <div class="concert-image">
+                    <img src="img/concert.jpg" alt="Concert">
+                </div>
+                <div class="concert-info">
+                    <h2 id="concertName">Sweetener World Tour</h2>
+                    <p class="artist">Ariana Grande</p>
+                    <p class="date">April 20, 2025 | 8:00 PM</p>
+                    <p class="venue">Rogers Arena, Vancouver, BC</p>
+                    <p class="price">$89.99 per ticket</p>
+                </div>
+            </div>
+
+            <div class="purchase-form">
+                <h3>Complete Your Purchase</h3>
+                <form id="ticketForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Number of Tickets</label>
+                        <select id="quantity" name="quantity" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                    <div class="form-group total-group">
+                        <p class="total-label">Total:</p>
+                        <p class="total-amount" id="totalAmount">$89.99</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-purchase">Complete Purchase</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <div id="confirmation" class="confirmation hidden">
+            <div class="confirmation-content">
+                <span class="close-btn">&times;</span>
+                <h2>Purchase Confirmed!</h2>
+                <p>Thank you for your purchase. A confirmation email has been sent to your email address.</p>
+                <p class="order-details">Order Details:</p>
+                <p id="conf-name"></p>
+                <p id="conf-email"></p>
+                <p id="conf-concert">Concert: Sweetener World Tour</p>
+                <p id="conf-tickets"></p>
+                <p id="conf-date"></p>
+                <button class="btn-close">Close</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 TicketHub. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
